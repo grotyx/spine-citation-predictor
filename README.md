@@ -1,3 +1,10 @@
+> ## Moved
+>
+> This repository has been merged into
+> **https://github.com/grotyx/citation-prediction-asj**, which now holds the analysis, the frozen
+> results and the web app in one place, and is the repository cited by the manuscript. Nothing here
+> is maintained; please use that repository instead.
+
 # spine-citation-predictor
 
 Code and cohort identifiers for *Citation-Naive Machine-Learning Prediction of Future Impact Among Published Spine Articles: A Bibliometric and Temporal Validation Study*.
