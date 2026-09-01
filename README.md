@@ -13,6 +13,7 @@ The study asks how far the later citation propensity of a published spine articl
 | `data/py/rev1_focused_analysis.py` | The analysis that produced every number in the manuscript: the locked reduced and expanded models, the association models, the abstract-availability analyses, the operating thresholds, the feature-group ablation and the descriptive checks |
 | `data/py/rev1_sensitivity_and_export.py` | The three sensitivity analyses prespecified in the submitted manuscript, repeated on the locked reduced model: original articles only, a country-blind model, and fixed 3-year-window labels. It imports the analysis above rather than editing it, because that script verifies its own hash against the manifest |
 | `results/` | The frozen outputs those analyses wrote. Every value in the manuscript, its tables and its supplement can be traced to these files |
+| `app/` | A Streamlit web app that scores one manuscript with the same locked reduced models. Deployed at [asj-citation.streamlit.app](https://asj-citation.streamlit.app/); see `app/README.md` |
 | `data/rev1_reproducibility_manifest.json` | Cohort hash, work-ID list hash, package versions, random seeds and the audit of author-feature availability |
 
 ## Data
@@ -38,6 +39,25 @@ python data/py/rev1_sensitivity_and_export.py  # prespecified sensitivity analys
 ```
 
 Each script resolves the project root from its own location; set `CITATION_PREDICTOR_ROOT` to override. Text embeddings use `sentence-transformers/all-MiniLM-L6-v2`; the revision pinned in the manifest is the one that was used. The random seed is 42 throughout.
+
+## Web app
+
+`app/` holds a small Streamlit interface that scores a single title and abstract with the same
+locked reduced Model A and Model B used in the paper. It is a demonstration, not a study result: it
+reports the same probabilities the manuscript reports, and it carries the same limits.
+
+```bash
+pip install -r app/requirements.txt
+streamlit run app/app.py
+python app/scorer.py          # self-check
+```
+
+The app keeps its own `requirements.txt` because it needs only the serving dependencies, not the
+analysis stack pinned at the repository root. Its bundled models must stay in step with the
+analysis: they are written by `data/py/rev1_sensitivity_and_export.py`, and the scikit-learn pin in
+`app/requirements.txt` has to match the version that fitted them.
+
+The app directory is licensed BSD-3-Clause (`app/LICENSE`); everything else is MIT (`LICENSE`).
 
 ## Two things worth knowing before reusing this
 
